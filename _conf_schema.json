@@ -1,0 +1,83 @@
+{
+  "github_token": {
+    "description": "GitHub Token",
+    "type": "string",
+    "default": "",
+    "secret": true,
+    "obvious_hint": true,
+    "hint": "推荐填写。留空为匿名访问，额度只有 60 次/小时，订阅较多时会限流。填一个只读的 Personal Access Token 可提升到 5000 次/小时，搜索接口也能正常使用。"
+  },
+  "proxy": {
+    "description": "HTTP 代理",
+    "type": "string",
+    "default": "",
+    "hint": "可选。访问 GitHub 需要代理时填写，例如 http://127.0.0.1:7890。留空则直连。仅支持 http / https 代理。"
+  },
+  "poll_interval": {
+    "description": "订阅轮询间隔（秒）",
+    "type": "int",
+    "default": 120,
+    "slider": {
+      "min": 60,
+      "max": 1800,
+      "step": 30
+    },
+    "hint": "每隔多少秒检查一次所有订阅的更新。配置了 Token 时 120 秒足够；使用匿名访问建议调到 600 秒以上，避免触发限流。"
+  },
+  "max_search_results": {
+    "description": "搜索仓库时最多返回的结果数",
+    "type": "int",
+    "default": 5,
+    "slider": {
+      "min": 1,
+      "max": 10,
+      "step": 1
+    }
+  },
+  "max_changelog_chars": {
+    "description": "Release 更新日志最多携带多少字符",
+    "type": "int",
+    "default": 1500,
+    "slider": {
+      "min": 0,
+      "max": 8000,
+      "step": 100
+    },
+    "hint": "更新日志过长时只把开头这么多字符交给模型，超出部分提示已截断并附上链接。设为 0 表示完全不携带日志正文，只给版本号和标题。"
+  },
+  "commit_detail_limit": {
+    "description": "单次汇报最多包含多少条 commit",
+    "type": "int",
+    "default": 10,
+    "slider": {
+      "min": 1,
+      "max": 50,
+      "step": 1
+    },
+    "hint": "一次轮询内某个仓库新增 commit 很多时，只保留最新的这么多条交给模型，避免刷屏和消耗过多 token。"
+  },
+  "skip_tag_pattern": {
+    "description": "跳过的版本标签关键词",
+    "type": "string",
+    "default": "alpha",
+    "hint": "可选。Release 的 tag 或标题包含这些关键词（英文逗号分隔，不区分大小写）时跳过不推送。默认跳过 alpha，留空表示所有版本都推送。github 的 prerelease 标记并不可靠，所以用标签关键词过滤。"
+  },
+  "report_provider_id": {
+    "description": "生成汇报的模型",
+    "type": "string",
+    "default": "",
+    "_special": "select_provider",
+    "hint": "留空则使用订阅所在会话当前使用的模型。"
+  },
+  "report_timeout": {
+    "description": "生成汇报的超时时间（秒）",
+    "type": "int",
+    "default": 30,
+    "slider": {
+      "min": 10,
+      "max": 120,
+      "step": 5
+    },
+    "hint": "超时或模型调用失败时，会退化为直接推送格式化文本，不会丢消息。"
+  }
+}

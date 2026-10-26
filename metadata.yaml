@@ -1,0 +1,8 @@
+name: astrbot_plugin_github_subscribe
+display_name: GitHub 订阅
+desc: 通过 LLM 工具搜索 GitHub 仓库，订阅仓库或开发者的 commit 与 Release，有新内容时由模型生成汇报并推送到订阅所在的会话。
+short_desc: GitHub 仓库 / 开发者 commit 与 Release 订阅
+version: v1.0.0
+author: astrbot-plugin-github-subscribe
+repo: ""
+astrbot_version: ">=4.16,<5"
